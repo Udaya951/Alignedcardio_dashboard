@@ -1,0 +1,568 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#102d45">
+  <meta name="description" content="AlignedCardio digital marketing performance dashboard for participating cardiology practices.">
+  <title>AlignedCardio | SEO &amp; Inbound Marketing Performance</title>
+
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2064%2064'%3E%3Crect%20width='64'%20height='64'%20rx='14'%20fill='%23102d45'/%3E%3Cpath%20d='M8%2034h12l6-12%2010%2024%207-12h13'%20fill='none'%20stroke='%2377d2c9'%20stroke-width='5'%20stroke-linecap='round'%20stroke-linejoin='round'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="style.css">
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.8/dist/chart.umd.min.js" defer></script>
+  <script src="script.js" defer></script>
+</head>
+
+<body>
+  <a class="skip" href="#overview">Skip to dashboard</a>
+
+  <div class="app">
+    <aside class="sidebar" id="sidebar">
+      <div class="brand">
+        <span class="mark" aria-hidden="true">⌁</span>
+        <span>Aligned<span class="brand-accent">Cardio</span><small>MARKETING PERFORMANCE</small></span>
+      </div>
+
+      <nav aria-label="Dashboard sections">
+        <a href="#overview" class="active">◫ <span>Overview</span></a>
+        <a href="#analytics">◉ <span>GA4 Analytics</span></a>
+        <a href="#search-console">⌕ <span>Search Console</span></a>
+        <a href="#rankings">▥ <span>Keyword Rankings</span></a>
+        <a href="#leads">♧ <span>Organic Leads</span></a>
+        <a href="#pages">▤ <span>Landing Pages</span></a>
+        <a href="#monthly">▦ <span>Monthly Performance</span></a>
+        <a href="#insights">◇ <span>SEO Insights</span></a>
+        <a href="#action-items">☑ <span>Action Items</span></a>
+      </nav>
+
+      <div class="side-bottom">
+        <span class="demo-dot"></span> SOURCE DATA<br>
+        <small id="sourceCoverage">5 of 6 practices available</small>
+      </div>
+    </aside>
+
+    <div class="main-wrap">
+      <header class="topbar">
+        <button class="icon-button menu" id="menuButton" aria-label="Open navigation" aria-expanded="false">☰</button>
+
+        <div class="header-title">
+          <strong>AlignedCardio · SEO Performance</strong>
+          <span id="currentDate"></span>
+        </div>
+
+        <div class="header-actions">
+          <span class="week-pill" id="weekLabel">Latest available</span>
+          <button class="icon-button" id="themeButton" aria-label="Switch to dark mode" title="Toggle theme">◐</button>
+          <button class="button secondary export-button" id="printHeader">Export Report ↗</button>
+        </div>
+      </header>
+
+      <main id="overview">
+        <div class="page-intro">
+          <div>
+            <div class="eyebrow">ALIGNEDCARDIO <span class="demo-tag">SOURCE DATA</span></div>
+            <h1>Digital marketing performance</h1>
+            <p id="periodLabel">Reporting windows: —</p>
+          </div>
+
+          <div class="filters">
+            <label>
+              SELECT PRACTICE
+              <select id="practiceSelect">
+                <option value="all">All Practices</option>
+                <option value="james">James River Cardiology</option>
+                <option value="colonial">Colonial Heart</option>
+                <option value="hra">Heart Rhythm Associates</option>
+                <option value="nova">Nova Cardiocare</option>
+                <option value="swva">Southwest Virginia Cardiology</option>
+                <option value="rethink">Rethink AFib</option>
+              </select>
+            </label>
+
+            <label>
+              REPORT VIEW
+              <select id="rangeSelect">
+                <option value="current">Current Period</option>
+                <option value="previous">Previous Period</option>
+                <option value="monthly">Monthly View</option>
+              </select>
+            </label>
+          </div>
+        </div>
+
+        <div class="section-heading">
+          <div>
+            <span class="eyebrow">EXECUTIVE OVERVIEW</span>
+            <h2 id="overviewTitle">Latest available data</h2>
+          </div>
+          <span class="muted" id="comparisonLabel"></span>
+        </div>
+
+        <div class="kpi-grid" id="executiveKpis"></div>
+        <div class="insight-strip" id="quickInsight"></div>
+
+        <section id="analytics" class="dashboard-section">
+          <div class="section-heading">
+            <div>
+              <span class="eyebrow">01 / AUDIENCE</span>
+              <h2>Google Analytics 4 Performance</h2>
+            </div>
+            <span class="source-label" id="gaPeriod"></span>
+          </div>
+
+          <div class="mini-grid" id="gaMetrics"></div>
+
+          <div class="chart-grid">
+            <article class="panel wide">
+              <div class="panel-head">
+                <div>
+                  <h3>Organic Traffic Trend</h3>
+                  <p>Daily organic sessions</p>
+                </div>
+              </div>
+              <div class="chart-box" id="trafficBox">
+                <canvas id="trafficChart" aria-label="Organic traffic trend" role="img"></canvas>
+              </div>
+            </article>
+
+            <article class="panel">
+              <div class="panel-head">
+                <div>
+                  <h3>Sessions by Channel</h3>
+                  <p>Session primary channel group</p>
+                </div>
+              </div>
+              <div class="chart-box">
+                <canvas id="sourceChart" aria-label="Sessions by channel" role="img"></canvas>
+              </div>
+            </article>
+
+            <article class="panel">
+              <div class="panel-head">
+                <div>
+                  <h3>Users vs Sessions</h3>
+                  <p>All channels, different GA4 scopes</p>
+                </div>
+              </div>
+              <div class="chart-box">
+                <canvas id="landingChart" aria-label="Users and sessions" role="img"></canvas>
+              </div>
+            </article>
+
+            <article class="panel">
+              <div class="panel-head">
+                <div>
+                  <h3>Engagement by Channel</h3>
+                  <p>Engaged sessions divided by sessions</p>
+                </div>
+              </div>
+              <div class="chart-box">
+                <canvas id="engagementChart" aria-label="Engagement by channel" role="img"></canvas>
+              </div>
+            </article>
+
+            <article class="panel">
+              <div class="panel-head">
+                <div>
+                  <h3>Organic Leads / Conversions</h3>
+                  <p>New leads attributed to first-user Organic Search</p>
+                </div>
+              </div>
+              <div class="chart-box" id="gaLeadsBox">
+                <canvas id="gaLeadsChart" aria-label="Organic new leads" role="img"></canvas>
+              </div>
+            </article>
+          </div>
+        </section>
+
+        <section id="search-console" class="dashboard-section">
+          <div class="section-heading">
+            <div>
+              <span class="eyebrow">02 / SEARCH VISIBILITY</span>
+              <h2>Google Search Console Performance</h2>
+            </div>
+            <span class="source-label" id="gscPeriod"></span>
+          </div>
+
+          <div class="mini-grid" id="gscMetrics"></div>
+
+          <div class="chart-grid two">
+            <article class="panel">
+              <div class="panel-head">
+                <div>
+                  <h3>Clicks and Impressions</h3>
+                  <p>Daily Web search performance; separate axes</p>
+                </div>
+              </div>
+              <div class="chart-box" id="searchBox">
+                <canvas id="searchChart" aria-label="Search clicks and impressions" role="img"></canvas>
+              </div>
+            </article>
+
+            <article class="panel">
+              <div class="panel-head">
+                <div>
+                  <h3>Average Position</h3>
+                  <p>Lower is better</p>
+                </div>
+              </div>
+              <div class="chart-box" id="positionBox">
+                <canvas id="positionChart" aria-label="Average search position" role="img"></canvas>
+              </div>
+            </article>
+
+            <article class="panel">
+              <div class="panel-head">
+                <div>
+                  <h3>Search CTR</h3>
+                  <p>Daily clicks divided by impressions</p>
+                </div>
+              </div>
+              <div class="chart-box" id="ctrBox">
+                <canvas id="ctrChart" aria-label="Search click-through rate" role="img"></canvas>
+              </div>
+            </article>
+          </div>
+
+          <article class="panel table-panel">
+            <div class="panel-head wrap">
+              <div>
+                <h3>Search Queries</h3>
+                <p>Query rows follow each practice’s own Search Console export window.</p>
+              </div>
+              <input id="querySearch" type="search" aria-label="Search queries" placeholder="Search queries">
+            </div>
+
+            <div class="table-scroll">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Practice</th>
+                    <th>Keyword</th>
+                    <th>Clicks</th>
+                    <th>Impressions</th>
+                    <th>CTR</th>
+                    <th>Avg. Position</th>
+                    <th>Ranking Change</th>
+                  </tr>
+                </thead>
+                <tbody id="queryRows"></tbody>
+              </table>
+            </div>
+            <p class="table-note" id="queryCount"></p>
+          </article>
+        </section>
+
+        <section id="rankings" class="dashboard-section">
+          <div class="section-heading">
+            <div>
+              <span class="eyebrow">03 / RANKINGS</span>
+              <h2>Keyword Ranking Performance</h2>
+            </div>
+            <span class="source-label">Aug 16 → Sep 27, 2026</span>
+          </div>
+
+          <div class="mini-grid five" id="rankMetrics"></div>
+
+          <article class="panel">
+            <div class="panel-head">
+              <div>
+                <h3>Current Rank Distribution</h3>
+                <p>Tracked location-level keyword rows; exclusive buckets</p>
+              </div>
+            </div>
+            <div class="chart-box short">
+              <canvas id="distributionChart" aria-label="Keyword rank distribution" role="img"></canvas>
+            </div>
+          </article>
+
+          <article class="panel table-panel">
+            <div class="panel-head wrap">
+              <div>
+                <h3>Tracked Keywords</h3>
+                <p>Each location is a separate tracked row</p>
+              </div>
+
+              <div class="table-tools">
+                <input id="keywordSearch" type="search" placeholder="Search keyword or URL" aria-label="Search keywords">
+                <select id="statusFilter" aria-label="Filter ranking status">
+                  <option value="all">All statuses</option>
+                  <option>Improved</option>
+                  <option>Declined</option>
+                  <option>No Change</option>
+                  <option>No Prior Rank</option>
+                  <option>Reported Lost</option>
+                  <option>Unranked</option>
+                </select>
+                <select id="rankSort" aria-label="Sort keywords">
+                  <option value="rank">Current rank</option>
+                  <option value="change">Ranking change</option>
+                  <option value="keyword">Keyword A–Z</option>
+                  <option value="location">Location A–Z</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="table-scroll">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Practice</th>
+                    <th>Keyword</th>
+                    <th>Location</th>
+                    <th>Current Rank</th>
+                    <th>Previous Rank</th>
+                    <th>Change</th>
+                    <th>Search Volume</th>
+                    <th>Category</th>
+                    <th>Priority</th>
+                    <th>URL / Landing Page</th>
+                    <th>SEO Status</th>
+                  </tr>
+                </thead>
+                <tbody id="keywordRows"></tbody>
+              </table>
+            </div>
+          </article>
+        </section>
+
+        <section id="leads" class="dashboard-section">
+          <div class="section-heading">
+            <div>
+              <span class="eyebrow">04 / ACQUISITION</span>
+              <h2>Organic Lead Performance</h2>
+            </div>
+            <span class="source-label">GA4: Sep 21–27, 2026</span>
+          </div>
+
+          <div class="mini-grid" id="leadMetrics"></div>
+
+          <div class="chart-grid two">
+            <article class="panel">
+              <div class="panel-head">
+                <div>
+                  <h3>Organic Lead Reporting</h3>
+                  <p>GA4 organic new leads for the available week</p>
+                </div>
+              </div>
+              <div class="chart-box" id="leadsBox">
+                <canvas id="leadsChart" aria-label="Organic new leads in reported week" role="img"></canvas>
+              </div>
+            </article>
+
+            <article class="panel">
+              <div class="panel-head">
+                <div>
+                  <h3>Self-Reported Sources</h3>
+                  <p>Full supplied workbook · all self-reported sources</p>
+                </div>
+              </div>
+              <div class="chart-box">
+                <canvas id="sourceLeadsChart" aria-label="Self-reported lead source rows" role="img"></canvas>
+              </div>
+            </article>
+          </div>
+
+          <div class="detail-note">
+            The reported lead row total covers the full supplied workbook and includes all self-reported sources.
+            The date columns have no headers, so it cannot be filtered reliably to the GA4 week.
+            Online Search may include paid search. GA4 organic new leads are a separate weekly metric;
+            no identifiers are displayed.
+          </div>
+
+          <article class="panel table-panel">
+            <div class="panel-head wrap">
+              <div>
+                <h3>Organic Lead Detail</h3>
+                <p>Only the reporting period and channel are available</p>
+              </div>
+            </div>
+            <div class="table-scroll">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Date / Month</th>
+                    <th>Landing Page</th>
+                    <th>Lead Type</th>
+                    <th>Source / Medium</th>
+                    <th>Leads</th>
+                    <th>Conversion Rate</th>
+                  </tr>
+                </thead>
+                <tbody id="dailyLeadRows"></tbody>
+              </table>
+            </div>
+          </article>
+        </section>
+
+        <section id="pages" class="dashboard-section">
+          <div class="section-heading">
+            <div>
+              <span class="eyebrow">05 / CONTENT</span>
+              <h2>Landing Pages</h2>
+            </div>
+            <span class="source-label">GA4 Sep 21–27 · GSC Aug 29–Sep 25</span>
+          </div>
+
+          <div class="chart-grid two">
+            <article class="panel">
+              <div class="panel-head">
+                <div>
+                  <h3>Top GA4 Landing Pages</h3>
+                  <p>Sessions from all channels</p>
+                </div>
+              </div>
+              <div class="chart-box">
+                <canvas id="pageChart" aria-label="Top landing pages by sessions" role="img"></canvas>
+              </div>
+            </article>
+
+            <article class="panel summary-card">
+              <h3>Page Data Coverage</h3>
+              <p class="muted">
+                GA4 page users and sessions include all channels. Organic-only page users and
+                organic leads by page were not supplied. Search Console page metrics follow
+                each practice’s own reporting window.
+              </p>
+            </article>
+          </div>
+
+          <article class="panel table-panel">
+            <div class="panel-head wrap">
+              <div>
+                <h3>Page Performance</h3>
+                <p>Matched by URL path; dates and scopes are shown above</p>
+              </div>
+              <select id="pageSort" aria-label="Sort landing pages">
+                <option value="sessions">GA4 sessions</option>
+                <option value="users">GA4 users</option>
+                <option value="clicks">GSC clicks</option>
+                <option value="impressions">GSC impressions</option>
+                <option value="ctr">GSC CTR</option>
+              </select>
+            </div>
+
+            <div class="table-scroll">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Practice</th>
+                    <th>Page URL</th>
+                    <th>Organic Users</th>
+                    <th>GA4 Users</th>
+                    <th>GA4 Sessions</th>
+                    <th>Organic Leads</th>
+                    <th>GSC Clicks</th>
+                    <th>Impressions</th>
+                    <th>CTR</th>
+                    <th>Avg. Position</th>
+                  </tr>
+                </thead>
+                <tbody id="pageRows"></tbody>
+              </table>
+            </div>
+          </article>
+        </section>
+
+        <section id="monthly" class="dashboard-section">
+          <div class="section-heading">
+            <div>
+              <span class="eyebrow">06 / PERIODS</span>
+              <h2>Monthly Performance</h2>
+            </div>
+          </div>
+
+          <article class="panel table-panel">
+            <div class="panel-head wrap">
+              <div>
+                <h3>Available Periods</h3>
+                <p>Only supplied periods are shown; N/A means no comparable export.</p>
+              </div>
+              <select id="monthlySort" aria-label="Sort monthly table">
+                <option value="dateDesc">Newest period</option>
+                <option value="dateAsc">Oldest period</option>
+                <option value="clicks">Search clicks</option>
+              </select>
+            </div>
+
+            <div class="table-scroll">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Month / Coverage</th>
+                    <th>Organic Users</th>
+                    <th>Organic Sessions</th>
+                    <th>Search Clicks</th>
+                    <th>Impressions</th>
+                    <th>CTR</th>
+                    <th>Avg. Position</th>
+                    <th>Organic Leads</th>
+                    <th>Lead Conversion Rate</th>
+                  </tr>
+                </thead>
+                <tbody id="monthlyRows"></tbody>
+              </table>
+            </div>
+          </article>
+        </section>
+
+        <section id="insights" class="dashboard-section">
+          <div class="section-heading">
+            <div>
+              <span class="eyebrow">07 / FINDINGS</span>
+              <h2>SEO Insights</h2>
+            </div>
+          </div>
+          <div class="insights-grid" id="managementInsights"></div>
+        </section>
+
+        <section id="action-items" class="dashboard-section">
+          <div class="section-heading">
+            <div>
+              <span class="eyebrow">08 / NEXT STEPS</span>
+              <h2>SEO Action Items</h2>
+            </div>
+          </div>
+
+          <article class="panel table-panel">
+            <div class="panel-head">
+              <div>
+                <h3>Recommended Actions</h3>
+                <p>Generated from supplied rankings and search performance</p>
+              </div>
+            </div>
+            <div class="table-scroll">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Priority</th>
+                    <th>Action</th>
+                    <th>Evidence</th>
+                    <th>Area</th>
+                  </tr>
+                </thead>
+                <tbody id="actionRows"></tbody>
+              </table>
+            </div>
+          </article>
+        </section>
+
+        <footer>
+          AlignedCardio | Digital Marketing Performance Dashboard
+          <span id="lastUpdated"></span>
+        </footer>
+      </main>
+    </div>
+  </div>
+
+  <div class="mobile-scrim" id="scrim" hidden></div>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <div class="export-menu" id="exportMenu" hidden>
+    <button id="exportCsv">Export CSV</button>
+    <button id="printReport">Print Report</button>
+    <button id="downloadPdf">Download PDF</button>
+  </div>
+</body>
+</html>
